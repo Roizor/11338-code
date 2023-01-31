@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.aidenlegacy;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
@@ -8,8 +9,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.CassHardware;
 
 @TeleOp(name = "! TFOD Test", group = "VuforiaTests")
+@Disabled
 public class AnythingIsFine extends LinearOpMode {
     private CassHardware robot = new CassHardware(this);
     private static final String TFOD_MODEL_ASSET  = "/storage/emulated/0/FIRST/tflitemodels/newest.tflite";

@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.aidenlegacy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.List;
@@ -11,8 +12,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaCurrentGame;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.Tfod;
+import org.firstinspires.ftc.teamcode.AidenDirections;
+import org.firstinspires.ftc.teamcode.CassHardware;
 
 @Autonomous(name = "AutoCamra3uyhsuiydhg", group = "VuforiaTests")
+@Disabled
 public class AutoCamra2 extends LinearOpMode {
 
     private VuforiaCurrentGame vuforiaPOWERPLAY;
