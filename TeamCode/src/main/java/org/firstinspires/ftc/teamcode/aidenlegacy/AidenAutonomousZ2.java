@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.AidenDirections;
-import org.firstinspires.ftc.teamcode.CassHardware;
+import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
+import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
 @Autonomous(name = "Aiden's Autonomous Zone 2 Park")
 @Disabled

@@ -1,7 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
+import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
 @Autonomous(name = "Aiden's Turning Tables")
 public class AidenTurnTables extends LinearOpMode {

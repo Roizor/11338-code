@@ -12,8 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaCurrentGame;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.Tfod;
-import org.firstinspires.ftc.teamcode.AidenDirections;
-import org.firstinspires.ftc.teamcode.CassHardware;
+import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
+import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
 @Autonomous(name = "AutoCamra3uyhsuiydhg", group = "VuforiaTests")
 @Disabled

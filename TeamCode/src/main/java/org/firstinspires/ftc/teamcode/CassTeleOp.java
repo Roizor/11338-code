@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
+import org.firstinspires.ftc.teamcode.helpers.CassHardware;
+
 
 @TeleOp(name="Working TeleOp (Cass)")
 public class CassTeleOp extends LinearOpMode {
@@ -30,28 +33,15 @@ public class CassTeleOp extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
+            /* Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
+             In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
+            This way it's also easy to just drive straight, or just turn. */
             drive = -gamepad1.left_stick_y;
             turn  =  gamepad1.right_stick_x;
             strafe  =  gamepad1.left_stick_x;
 
             // Combine drive and turn for blended motion. Use RobotHardware class
             robot.driveRobot(drive, turn , strafe);
-
-            // Use gamepad left & right Bumpers to open and close the claw
-            // Use the SERVO constants defined in RobotHardware class.
-            // Each time around the loop, the servos will move by a small amount.
-            // Limit the total offset to half of the full travel range
-            // if (gamepad1.right_bumper)
-            //    handOffset += robot.HAND_SPEED;
-            // else if (gamepad1.left_bumper)
-            //      handOffset -= robot.HAND_SPEED;
-            // handOffset = Range.clip(handOffset, -0.5, 0.5);
-
-            // Move both servos to new position.  Use RobotHardware class
-            // robot.setHandPositions(handOffset);
 
             // Use gamepad buttons to move arm up (Y) and down (A)
             // Use the MOTOR constants defined in RobotHardware class.
