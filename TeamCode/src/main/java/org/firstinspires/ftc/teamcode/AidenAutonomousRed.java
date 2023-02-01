@@ -14,8 +14,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "Aiden's Autonomous")
-public class AidenAutonomous extends LinearOpMode
+@Autonomous(name = "Aiden's Autonomous: RED")
+public class AidenAutonomousRed extends LinearOpMode
 {
     OpenCvCamera camera;
     CassHardware robot = new CassHardware(this);
