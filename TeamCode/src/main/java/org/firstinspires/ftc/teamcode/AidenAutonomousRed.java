@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
@@ -152,13 +153,13 @@ public class AidenAutonomousRed extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null)
         {
+            robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
-            robot.driveDistance(24, AidenDirections.RIGHT);
             robot.driveDistance(24, AidenDirections.LEFT);
-            coneToSmallJunction();
+            sleep(50);
+            robot.driveDistance(24, AidenDirections.RIGHT);
             telemetry.addLine("Zone 2");
             // Now lets park in zone 2
-            robot.driveDistance(24, AidenDirections.LEFT);
             robot.driveDistance(24, AidenDirections.FORWARDS);
         }
         else
@@ -166,28 +167,26 @@ public class AidenAutonomousRed extends LinearOpMode
             /*
              * Insert your autonomous code here, probably using the tag pose to decide your configuration.
              */
-
+            robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
-            robot.driveDistance(28, AidenDirections.RIGHT);
+            robot.driveDistance(25, AidenDirections.RIGHT);
+            sleep(250);
             // Go up a square
             robot.driveDistance(24, AidenDirections.FORWARDS);
+            sleep(250);
             // Back into zone 2
-            robot.driveDistance(26, AidenDirections.LEFT);
+            sleep(250);
             // Fit back to start, now lets run cone to small junction.
-            robot.driveDistance(24, AidenDirections.BACKWARDS);
-            coneToSmallJunction();
+//            coneToSmallJunction();
             // Reset position, now lets go park in a zone.
             if(tagOfInterest.id == ZONE1_ID) {
                 telemetry.addLine("Zone 1");
-                robot.driveDistance(24, AidenDirections.RIGHT);
-                robot.driveDistance(24, AidenDirections.FORWARDS);
             } else if(tagOfInterest.id == ZONE2_ID) {
                 telemetry.addLine("Zone 2");
-                robot.driveDistance(24, AidenDirections.FORWARDS);
+                robot.driveDistance(29, AidenDirections.RIGHT);
             } else if(tagOfInterest.id == ZONE3_ID) {
                 telemetry.addLine("Zone 3");
-                robot.driveDistance(24, AidenDirections.LEFT);
-                robot.driveDistance(28, AidenDirections.FORWARDS);
+                robot.driveDistance(57, AidenDirections.RIGHT);
             }
         }
 
@@ -197,13 +196,14 @@ public class AidenAutonomousRed extends LinearOpMode
     void coneToSmallJunction() {
         robot.setHand(AidenDirections.OPEN);
         robot.driveDistance(46, AidenDirections.FORWARDS);
-        robot.driveRobot(0.5, 1, 0.25);
+        robot.driveRobot(0.5, -1, 0.25);
         sleep(850);
-        robot.driveDistance(1, AidenDirections.FORWARDS);
-        robot.driveDistance(12, AidenDirections.FORWARDS);
+        robot.driveDistance(0, AidenDirections.FORWARDS);
+        robot.driveDistance(13, AidenDirections.FORWARDS);
         robot.Evel.setPower(-1);
         sleep(250);
         robot.Evel.setPower(0);
+        sleep(50);
         robot.setHand(AidenDirections.CLOSED);
         sleep(350);
         robot.Evel.setPower(-1);
@@ -212,7 +212,8 @@ public class AidenAutonomousRed extends LinearOpMode
         sleep(250);
         robot.Evel.setPower(0);
         robot.driveDistance(17, AidenDirections.BACKWARDS);
-        robot.driveDistance(12, AidenDirections.RIGHT);
+        sleep(350);
+        robot.driveDistance(12, AidenDirections.LEFT);
         robot.driveDistance(2, AidenDirections.FORWARDS);
         robot.Evel.setPower(-1);
         sleep(650);
@@ -221,7 +222,7 @@ public class AidenAutonomousRed extends LinearOpMode
         sleep(150);
         robot.driveDistance(4, AidenDirections.FORWARDS);
         robot.Evel.setPower(0);
-        robot.driveRobot(-0.5, -1, 0.25);
+        robot.driveRobot(-0.5, 1, 0.25);
         sleep(950);
         robot.driveDistance(12, AidenDirections.BACKWARDS);
         robot.driveDistance(24, AidenDirections.BACKWARDS);

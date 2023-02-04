@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
@@ -48,6 +49,8 @@ public class CassTeleOp extends LinearOpMode {
             if (gamepad2.left_bumper) robot.setHand(AidenDirections.OPEN);
 
             if (gamepad2.right_bumper)robot.setHand(AidenDirections.CLOSED);
+
+            if(gamepad2.triangle)robot.setHand(AidenDirections.ALLOPEN);
 
             if (gamepad2.dpad_up)
             {

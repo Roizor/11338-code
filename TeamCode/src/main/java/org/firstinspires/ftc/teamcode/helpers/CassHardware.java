@@ -150,6 +150,17 @@ public class CassHardware {
     }
 
     /**
+     * Definitely an experimental feature.
+     * @param zpb ZeroPowerBehavior
+     */
+    public void setZPB(DcMotor.ZeroPowerBehavior zpb) {
+        Bob.setZeroPowerBehavior(zpb);
+        Timothy.setZeroPowerBehavior(zpb);
+        Bleff.setZeroPowerBehavior(zpb);
+        Josh.setZeroPowerBehavior(zpb);
+    }
+
+    /**
      * Calculates the left/right motor powers required to achieve the requested
      * robot motions: Drive (Axial motion) and Turn (Yaw motion).
      * Then sends these power levels to the motors.
@@ -214,11 +225,14 @@ public class CassHardware {
 
     public void setHand(AidenDirections position) {
         if(position == AidenDirections.OPEN) {
-            LeftHand.setPosition(0.05);
-            RightHand.setPosition(0.4);
-        } else {
             LeftHand.setPosition(0.2);
             RightHand.setPosition(0.25);
+        } else if(position == AidenDirections.ALLOPEN) {
+            LeftHand.setPosition(0.44);
+            RightHand.setPosition(0.07);
+        } else if(position == AidenDirections.CLOSED) {
+            LeftHand.setPosition(0.11);
+            RightHand.setPosition(0.4);
         }
     }
 

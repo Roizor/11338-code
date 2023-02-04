@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public enum AidenDirections {
     FORWARDS,
     BACKWARDS,
+    ALLOPEN,
     LEFT,
     RIGHT,
     OPEN,

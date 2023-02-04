@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
-@Autonomous(name = "Aiden's Turning Tables")
+@Autonomous(name = "Aiden's Small Junction Test")
 public class AidenTurnTables extends LinearOpMode {
     private CassHardware robot = new CassHardware(this);
 
