@@ -169,13 +169,12 @@ public class AidenAutonomousRed extends LinearOpMode
              */
             robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
-            robot.driveDistance(25, AidenDirections.RIGHT);
+            robot.driveDistance(25, AidenDirections.LEFT);
             sleep(250);
             // Go up a square
-            robot.driveDistance(24, AidenDirections.FORWARDS);
+            robot.driveDistance(26, AidenDirections.FORWARDS);
             sleep(250);
             // Back into zone 2
-            sleep(250);
             // Fit back to start, now lets run cone to small junction.
 //            coneToSmallJunction();
             // Reset position, now lets go park in a zone.
@@ -183,7 +182,7 @@ public class AidenAutonomousRed extends LinearOpMode
                 telemetry.addLine("Zone 1");
             } else if(tagOfInterest.id == ZONE2_ID) {
                 telemetry.addLine("Zone 2");
-                robot.driveDistance(29, AidenDirections.RIGHT);
+                robot.driveDistance(27, AidenDirections.RIGHT);
             } else if(tagOfInterest.id == ZONE3_ID) {
                 telemetry.addLine("Zone 3");
                 robot.driveDistance(57, AidenDirections.RIGHT);

@@ -157,10 +157,10 @@ public class AidenAutonomousBlue extends LinearOpMode
             // Push cone into terminal
             robot.driveDistance(24, AidenDirections.RIGHT);
             sleep(50);
-            robot.driveDistance(24, AidenDirections.LEFT);
             telemetry.addLine("Zone 2");
             // Now lets park in zone 2
             robot.driveDistance(24, AidenDirections.FORWARDS);
+            robot.driveDistance(24, AidenDirections.LEFT);
         }
         else
         {
@@ -172,18 +172,20 @@ public class AidenAutonomousBlue extends LinearOpMode
             robot.driveDistance(25, AidenDirections.RIGHT);
             sleep(250);
             // Go up a square
-            robot.driveDistance(24, AidenDirections.FORWARDS);
+            robot.driveDistance(26, AidenDirections.FORWARDS);
             sleep(250);
             // Reset position, now lets go park in a zone.
             if(tagOfInterest.id == ZONE1_ID) {
                 telemetry.addLine("Zone 1");
+                robot.driveDistance(57, AidenDirections.LEFT);
             } else if(tagOfInterest.id == ZONE2_ID) {
                 telemetry.addLine("Zone 2");
-                robot.driveDistance(29, AidenDirections.RIGHT);
+                robot.driveDistance(29, AidenDirections.LEFT);
             } else if(tagOfInterest.id == ZONE3_ID) {
                 telemetry.addLine("Zone 3");
-                robot.driveDistance(57, AidenDirections.RIGHT);
+
             }
+            telemetry.update();
         }
 
 

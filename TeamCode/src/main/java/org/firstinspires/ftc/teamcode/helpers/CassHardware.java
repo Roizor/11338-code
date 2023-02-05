@@ -231,7 +231,7 @@ public class CassHardware {
             LeftHand.setPosition(0.44);
             RightHand.setPosition(0.07);
         } else if(position == AidenDirections.CLOSED) {
-            LeftHand.setPosition(0.11);
+            LeftHand.setPosition(0.09);
             RightHand.setPosition(0.4);
         }
     }
