@@ -15,7 +15,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Tfod;
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
-@Autonomous(name = "AutoCamra3uyhsuiydhg", group = "VuforiaTests")
+/**
+ * This is a very early prototype for our autonomous vision using Vuforia instead of AprilTags.
+ */
+@Autonomous(name = "AutoCamra3", group = "VuforiaTests")
 @Disabled
 public class AutoCamra2 extends LinearOpMode {
 

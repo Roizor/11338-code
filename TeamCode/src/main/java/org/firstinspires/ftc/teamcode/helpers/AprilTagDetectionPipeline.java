@@ -15,7 +15,7 @@ import org.openftc.apriltag.AprilTagDetectorJNI;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
-
+// Code not by me, look at https://github.com/OpenFTC/EOCV-AprilTag-Plugin .
 public class AprilTagDetectionPipeline extends OpenCvPipeline
 {
     private long nativeApriltagPtr;

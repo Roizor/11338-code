@@ -153,6 +153,9 @@ public class AidenAutonomousRed extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null)
         {
+            // This is the fallback method. If no tag is seen and we start the robot, just park in zone 2 and hope for the best.
+
+            // Set the claw to all the way open for easier movement
             robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
             robot.driveDistance(24, AidenDirections.LEFT);
@@ -164,9 +167,9 @@ public class AidenAutonomousRed extends LinearOpMode
         }
         else
         {
-            /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
-             */
+            // This method is global except for the zone checker.
+
+            // Set the claw to all the way open for easier movement
             robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
             robot.driveDistance(25, AidenDirections.LEFT);
@@ -174,9 +177,6 @@ public class AidenAutonomousRed extends LinearOpMode
             // Go up a square
             robot.driveDistance(26, AidenDirections.FORWARDS);
             sleep(250);
-            // Back into zone 2
-            // Fit back to start, now lets run cone to small junction.
-//            coneToSmallJunction();
             // Reset position, now lets go park in a zone.
             if(tagOfInterest.id == ZONE1_ID) {
                 telemetry.addLine("Zone 1");
@@ -192,6 +192,7 @@ public class AidenAutonomousRed extends LinearOpMode
 
     }
 
+    // Unused experimental function
     void coneToSmallJunction() {
         robot.setHand(AidenDirections.OPEN);
         robot.driveDistance(46, AidenDirections.FORWARDS);

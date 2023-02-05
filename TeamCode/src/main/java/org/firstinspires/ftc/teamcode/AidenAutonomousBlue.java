@@ -15,10 +15,15 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+/**
+ * Quick note, I have no clue what I was doing for the names. This is quite possibly meant by tape side.
+ */
+
 @Autonomous(name = "Aiden's Autonomous: BLUE")
 public class AidenAutonomousBlue extends LinearOpMode
 {
     OpenCvCamera camera;
+    // Initialize robot w/ hardware map (makes code cleaner)
     CassHardware robot = new CassHardware(this);
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -83,6 +88,8 @@ public class AidenAutonomousBlue extends LinearOpMode
 
                 for(AprilTagDetection tag : currentDetections)
                 {
+                    // Look for zone1 tag, zone2 tag, zone3 tag
+                    // These values are changable at the (ZONE(number)_ID) variable
                     if(tag.id == ZONE1_ID || tag.id == ZONE2_ID || tag.id == ZONE3_ID)
                     {
                         tagOfInterest = tag;
@@ -103,6 +110,7 @@ public class AidenAutonomousBlue extends LinearOpMode
                     if(tagOfInterest == null)
                     {
                         telemetry.addLine("(The tag has never been seen)");
+                        telemetry.addLine("[The program might have been initialized within the past 3 seconds]");
                     }
                     else
                     {
@@ -153,6 +161,9 @@ public class AidenAutonomousBlue extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null)
         {
+            // This is the fallback method. If no tag is seen and we start the robot, just park in zone 2 and hope for the best.
+
+            // Set the claw to all the way open for easier movement
             robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
             robot.driveDistance(24, AidenDirections.RIGHT);
@@ -164,9 +175,9 @@ public class AidenAutonomousBlue extends LinearOpMode
         }
         else
         {
-            /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
-             */
+            // This method is global except for the zone checker.
+
+            // Set the claw to all the way open for easier movement
             robot.setHand(AidenDirections.ALLOPEN);
             // Push cone into terminal
             robot.driveDistance(25, AidenDirections.RIGHT);
@@ -191,6 +202,7 @@ public class AidenAutonomousBlue extends LinearOpMode
 
     }
 
+    // Unused experimental function
     void coneToSmallJunction() {
         robot.setHand(AidenDirections.OPEN);
         robot.driveDistance(46, AidenDirections.FORWARDS);

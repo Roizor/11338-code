@@ -40,22 +40,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.Stack;
 
 /**
- * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
- * Please read the explanations in that Sample about how to use this class definition.
- *
- * This file defines a Java Class that performs all the setup and configuration for a sample robot's hardware (motors and sensors).
- * It assumes three motors (left_drive, right_drive and arm) and two servos (left_hand and right_hand)
- *
- * This one file/class can be used by ALL of your OpModes without having to cut & paste the code each time.
- *
- * Where possible, the actual hardware objects are "abstracted" (or hidden) so the OpMode code just makes calls into the class,
- * rather than accessing the internal hardware directly. This is why the objects are declared "private".
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with *exactly the same name*.
- *
- * Or.. In OnBot Java, add a new file named RobotHardware.java, drawing from this Sample; select Not an OpMode.
- * Also add a new OpMode, drawing from the Sample ConceptExternalHardwareClass.java; select TeleOp.
- *
+ * This is the hardware map.
+ * It does hardware mapping things for easier control over motors & servos.
  */
 
 public class CassHardware {
@@ -63,7 +49,7 @@ public class CassHardware {
     /* Declare OpMode members. */
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
-    // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
+    // Define Motor and Servo objects  (Make them public so they can be accessed externally)
     public DcMotor Bob   = null;
     public DcMotor Timothy  = null;
     public DcMotor Bleff   = null;
@@ -78,26 +64,24 @@ public class CassHardware {
      */
 
     public BNO055IMU imu = null;
-    public AidenDirections dirs;
+    public AidenDirections dirs; // Custom direction enumerator for easier readability
     public Servo LeftHand = null;
+
+    /**
+     * Turn your set amount of inches into motor ticks today!
+     * @param inches The amount of inches you want to... move!
+     * @return Returns a fully converted inches to tick number that can be used for... moving the motors.
+     */
     private double inchesToBot(double inches) {
         return inches * 32.1934294;
     }
-    //nice
     public Servo RightHand = null;
     public WebcamName Cammy = null;
-
-    // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
-    // public static final double MID_SERVO       =  0.5 ;
-    //public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
-    //public static final double ARM_UP_POWER    =  0.45 ;
-    //public static final double ARM_DOWN_POWER  = -0.45 ;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CassHardware (LinearOpMode opmode) {
         myOpMode = opmode;
     }
-    public Stack<String> telemetryQueue;
 
     /**
      * Initialize all the robot's hardware.
@@ -117,6 +101,7 @@ public class CassHardware {
         imu = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
         Cammy = myOpMode.hardwareMap.get(WebcamName.class, "Cammy");
 
+        // This is where most of the magical setup happens.
         resetEncoders();
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -137,20 +122,11 @@ public class CassHardware {
         imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         imuParameters.loggingEnabled = true;
         imu.initialize(imuParameters);
-
-        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-        // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Define and initialize ALL installed servos.
-        //  leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
-        //  rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-        //   leftHand.setPosition(MID_SERVO);
-        //   rightHand.setPosition(MID_SERVO);
     }
 
     /**
      * Definitely an experimental feature.
+     * This was never actually used.
      * @param zpb ZeroPowerBehavior
      */
     public void setZPB(DcMotor.ZeroPowerBehavior zpb) {
@@ -200,10 +176,10 @@ public class CassHardware {
 
         this.setDrivePower(le, ri ,lb ,rb);
     }
-    public void addTelemetryData(String prompt, Object value) {
-        telemetryQueue.push(prompt+":"+value);
-    }
 
+    /**
+     * Reset the encoders on each motor (Set the runmode to stop & reset, then restart with encoders)
+     */
     public void resetEncoders() {
         Bob.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Timothy.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -216,6 +192,13 @@ public class CassHardware {
         Josh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    /**
+     * Set directions of every motor in one function!
+     * @param bobdir DcMotor direction you want Bob to move
+     * @param timdir DcMotor direction you want Timothy to move
+     * @param bleffdir DcMotor direction you want Bleff to move
+     * @param joshdir DcMotor direction you want Josh to move
+     */
     public void setAllDirections(DcMotor.Direction bobdir, DcMotor.Direction timdir, DcMotor.Direction bleffdir, DcMotor.Direction joshdir) {
         Bob.setDirection(bobdir);
         Timothy.setDirection(timdir);
@@ -223,6 +206,10 @@ public class CassHardware {
         Josh.setDirection(joshdir);
     }
 
+    /**
+     * Set the hand position according to the AidenDirections Enumerator
+     * @param position Any of the following: AidenDirections.[OPEN, ALLOPEN, CLOSED]
+     */
     public void setHand(AidenDirections position) {
         if(position == AidenDirections.OPEN) {
             LeftHand.setPosition(0.2);
@@ -238,7 +225,6 @@ public class CassHardware {
 
     /**
      * Pass the requested wheel motor powers to the appropriate hardware drive motors.
-     *
      */
     public void setDrivePower(double BobWheel, double TimothyWheel ,double BleffWheel ,double JoshWheel ) {
         // Output the values to the motor drives.

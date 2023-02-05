@@ -10,7 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
-
+/**
+ * This is a very early prototype for our autonomous vision using Vuforia instead of AprilTags.
+ */
 @TeleOp(name = "! TFOD Test", group = "VuforiaTests")
 @Disabled
 public class AnythingIsFine extends LinearOpMode {
@@ -22,7 +24,7 @@ public class AnythingIsFine extends LinearOpMode {
             "Red"
     };
     private static final String VUFORIA_KEY =
-            "AY2IJkf/////AAABmeCCrdXLFUr3oYVrqpag8TtlOopsqWN8hL7oGstTWV0iUskaReAN1Gfej2O5RIiNfjLdG6PoaUW9sumLRXBoYk0WjWill1us+dlT7XdtCpTyAcKh7hgyrnOx9E2uypCyYIUqAVLAsD2Ch+hS5YDVIBgzKTWFHmPHQEgAAEav1b/BH7jyDA9xigi2aP4OT1kHsjOl9mNUxyaq4V1ieWZpbFiWF1W1yQD1Z3S4TAd4+5vhf08gr2WrY0oKd/1my+XYD63/FCIdS17BP5v9jq9i1JtzKsUQJD/MFGk8XmMK0rag0smlTty9NLNTANAtc8gFm8xIG4tXxREz6oRUwFsgxF4tbmphDjb9Z+lH9LwDSFRP";
+            "";
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 

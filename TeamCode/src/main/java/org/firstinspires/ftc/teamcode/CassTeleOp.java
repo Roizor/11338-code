@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
 
-
+// This is our TeleOp mode.
 @TeleOp(name="Working TeleOp (Cass)")
 public class CassTeleOp extends LinearOpMode {
 
@@ -50,23 +50,24 @@ public class CassTeleOp extends LinearOpMode {
 
             if (gamepad2.right_bumper)robot.setHand(AidenDirections.CLOSED);
 
-            if(gamepad2.triangle)robot.setHand(AidenDirections.ALLOPEN);
+            if(gamepad2.triangle)robot.setHand(AidenDirections.ALLOPEN); // This is our newest addition: setting the claw to all the way open from Triangle being pressed
 
             if (gamepad2.dpad_up)
             {
+                // Make the arm go up
                 robot.Evel.setPower(-0.5);
             }
             else if (gamepad2.dpad_down)
             {
-                // nice
+                // Make the arm go down
                 robot.Evel.setPower(0.1);
             }
             else
             {
+                // Apply constant force to the arm so it does not get stuck
                 robot.Evel.setPower(-0.08);
             }
 
-            // robot.setArmPower(arm);
 
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");

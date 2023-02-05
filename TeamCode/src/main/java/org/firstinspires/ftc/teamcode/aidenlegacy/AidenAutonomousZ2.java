@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
-
+/**
+ * This is our very first working autonomous mode that does not use vision whatsoever
+ */
 @Autonomous(name = "Aiden's Autonomous Zone 2 Park")
 @Disabled
 public class AidenAutonomousZ2 extends LinearOpMode {
