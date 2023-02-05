@@ -18,7 +18,6 @@ import java.util.ArrayList;
 /**
  * Quick note, I have no clue what I was doing for the names. This is quite possibly meant by tape side.
  */
-
 @Autonomous(name = "Aiden's Autonomous: BLUE")
 public class AidenAutonomousBlue extends LinearOpMode
 {
