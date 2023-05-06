@@ -29,12 +29,15 @@
 
 package org.firstinspires.ftc.teamcode.helpers;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Stack;
@@ -63,7 +66,7 @@ public class CassHardware {
     josh back right
      */
 
-    public BNO055IMU imu = null;
+    public IMU imu = null;
     public AidenDirections dirs; // Custom direction enumerator for easier readability
     public Servo LeftHand = null;
 
@@ -98,7 +101,7 @@ public class CassHardware {
         Evel = myOpMode.hardwareMap.get(DcMotor.class, "lift");
         LeftHand = myOpMode.hardwareMap.get(Servo.class, "leftc");
         RightHand = myOpMode.hardwareMap.get(Servo.class, "rightc");
-        imu = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
+        imu = myOpMode.hardwareMap.get(IMU.class, "imu");
         Cammy = myOpMode.hardwareMap.get(WebcamName.class, "Cammy");
 
         // This is where most of the magical setup happens.
@@ -107,21 +110,19 @@ public class CassHardware {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        Bob.setDirection(DcMotor.Direction.REVERSE);
+        Bob.setDirection(DcMotor.Direction.FORWARD);
         Timothy.setDirection(DcMotor.Direction.FORWARD);
-        Bleff.setDirection(DcMotor.Direction.REVERSE);
-        Josh.setDirection(DcMotor.Direction.FORWARD);
+        Bleff.setDirection(DcMotor.Direction.FORWARD);
+        Josh.setDirection(DcMotor.Direction.REVERSE);
 
         Bob.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Timothy.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Bleff.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Josh.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        imuParameters.loggingEnabled = true;
-        imu.initialize(imuParameters);
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        imu.initialize(parameters);
     }
 
     /**
@@ -135,6 +136,7 @@ public class CassHardware {
         Bleff.setZeroPowerBehavior(zpb);
         Josh.setZeroPowerBehavior(zpb);
     }
+
 
     /**
      * Calculates the left/right motor powers required to achieve the requested
