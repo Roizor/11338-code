@@ -1,13 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.webkit.WebBackForwardList;
-
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
@@ -53,10 +47,10 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            robot.Bob.setPower(frontLeftPower);
-            robot.Timothy.setPower(frontRightPower);
-            robot.Bleff.setPower(backLeftPower);
-            robot.Josh.setPower(backRightPower);
+            robot.motorLeftFront.setPower(frontLeftPower);
+            robot.motorRightFront.setPower(frontRightPower);
+            robot.motorBackLeft.setPower(backLeftPower);
+            robot.motorBackRight.setPower(backRightPower);
 
         }
     }
