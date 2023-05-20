@@ -21,10 +21,10 @@ public class AidenAutonomousZ2 extends LinearOpMode {
         robot.driveDistance(24, AidenDirections.RIGHT);
         while (opModeIsActive()) {
             telemetry.addData("Going to", "Zone 2!");
-            telemetry.addData("Bob @", robot.Bob.getCurrentPosition());
-            telemetry.addData("Timothy @", robot.Timothy.getCurrentPosition());
-            telemetry.addData("Bleff @", robot.Bleff.getCurrentPosition());
-            telemetry.addData("Josh @", robot.Josh.getCurrentPosition());
+            telemetry.addData("Bob @", robot.motorLeftFront.getCurrentPosition());
+            telemetry.addData("Timothy @", robot.motorRightFront.getCurrentPosition());
+            telemetry.addData("Bleff @", robot.motorBackLeft.getCurrentPosition());
+            telemetry.addData("Josh @", robot.motorBackRight.getCurrentPosition());
             telemetry.update();
         }
     }

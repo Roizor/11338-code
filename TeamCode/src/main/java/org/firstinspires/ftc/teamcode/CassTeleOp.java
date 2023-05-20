@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 import org.firstinspires.ftc.teamcode.helpers.CassHardware;
@@ -55,17 +54,17 @@ public class CassTeleOp extends LinearOpMode {
             if (gamepad2.dpad_up)
             {
                 // Make the arm go up
-                robot.Evel.setPower(-0.5);
+                robot.motorLift.setPower(-0.5);
             }
             else if (gamepad2.dpad_down)
             {
                 // Make the arm go down
-                robot.Evel.setPower(0.1);
+                robot.motorLift.setPower(0.1);
             }
             else
             {
                 // Apply constant force to the arm so it does not get stuck
-                robot.Evel.setPower(-0.08);
+                robot.motorLift.setPower(-0.07);
             }
 
 

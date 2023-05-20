@@ -29,15 +29,14 @@
 
 package org.firstinspires.ftc.teamcode.helpers;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.helpers.AidenDirections;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.Stack;
 
 /**
  * This is the hardware map.
@@ -50,11 +49,11 @@ public class CassHardware {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them public so they can be accessed externally)
-    public DcMotor Bob   = null;
-    public DcMotor Timothy  = null;
-    public DcMotor Bleff   = null;
-    public DcMotor Josh  = null;
-    public DcMotor Evel = null;
+    public DcMotor motorLeftFront = null;
+    public DcMotor motorRightFront = null;
+    public DcMotor motorBackLeft = null;
+    public DcMotor motorBackRight = null;
+    public DcMotor motorLift = null;
 
         /*
     bob front left
@@ -63,9 +62,9 @@ public class CassHardware {
     josh back right
      */
 
-    public BNO055IMU imu = null;
+    public IMU imu = null;
     public AidenDirections dirs; // Custom direction enumerator for easier readability
-    public Servo LeftHand = null;
+    public Servo servoLeftHand = null;
 
     /**
      * Turn your set amount of inches into motor ticks today!
@@ -75,7 +74,7 @@ public class CassHardware {
     private double inchesToBot(double inches) {
         return inches * 32.1934294;
     }
-    public Servo RightHand = null;
+    public Servo servoRightHand = null;
     public WebcamName Cammy = null;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
@@ -91,37 +90,26 @@ public class CassHardware {
      */
     public void init()    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        Bob  = myOpMode.hardwareMap.get(DcMotor.class, "lefron");
-        Timothy = myOpMode.hardwareMap.get(DcMotor.class, "rifron");
-        Bleff   = myOpMode.hardwareMap.get(DcMotor.class, "bleff");
-        Josh = myOpMode.hardwareMap.get(DcMotor.class, "bright");
-        Evel = myOpMode.hardwareMap.get(DcMotor.class, "lift");
-        LeftHand = myOpMode.hardwareMap.get(Servo.class, "leftc");
-        RightHand = myOpMode.hardwareMap.get(Servo.class, "rightc");
-        imu = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
+        motorLeftFront = myOpMode.hardwareMap.get(DcMotor.class, "lefron");
+        motorRightFront = myOpMode.hardwareMap.get(DcMotor.class, "rifron");
+        motorBackLeft = myOpMode.hardwareMap.get(DcMotor.class, "bleff");
+        motorBackRight = myOpMode.hardwareMap.get(DcMotor.class, "bright");
+        motorLift = myOpMode.hardwareMap.get(DcMotor.class, "lift");
+        servoLeftHand = myOpMode.hardwareMap.get(Servo.class, "leftc");
+        servoRightHand = myOpMode.hardwareMap.get(Servo.class, "rightc");
+        imu = myOpMode.hardwareMap.get(IMU.class, "imu");
         Cammy = myOpMode.hardwareMap.get(WebcamName.class, "Cammy");
 
         // This is where most of the magical setup happens.
         resetEncoders();
 
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
-        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        Bob.setDirection(DcMotor.Direction.REVERSE);
-        Timothy.setDirection(DcMotor.Direction.FORWARD);
-        Bleff.setDirection(DcMotor.Direction.REVERSE);
-        Josh.setDirection(DcMotor.Direction.FORWARD);
+        this.setAllDirections(DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
 
-        Bob.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Timothy.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Bleff.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Josh.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.setZPB(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imuParameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        imuParameters.loggingEnabled = true;
-        imu.initialize(imuParameters);
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        imu.initialize(parameters);
     }
 
     /**
@@ -130,11 +118,12 @@ public class CassHardware {
      * @param zpb ZeroPowerBehavior
      */
     public void setZPB(DcMotor.ZeroPowerBehavior zpb) {
-        Bob.setZeroPowerBehavior(zpb);
-        Timothy.setZeroPowerBehavior(zpb);
-        Bleff.setZeroPowerBehavior(zpb);
-        Josh.setZeroPowerBehavior(zpb);
+        motorLeftFront.setZeroPowerBehavior(zpb);
+        motorRightFront.setZeroPowerBehavior(zpb);
+        motorBackLeft.setZeroPowerBehavior(zpb);
+        motorBackRight.setZeroPowerBehavior(zpb);
     }
+
 
     /**
      * Calculates the left/right motor powers required to achieve the requested
@@ -181,15 +170,15 @@ public class CassHardware {
      * Reset the encoders on each motor (Set the runmode to stop & reset, then restart with encoders)
      */
     public void resetEncoders() {
-        Bob.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Timothy.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bleff.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Josh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Bob.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Timothy.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Bleff.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Josh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
@@ -200,10 +189,10 @@ public class CassHardware {
      * @param joshdir DcMotor direction you want Josh to move
      */
     public void setAllDirections(DcMotor.Direction bobdir, DcMotor.Direction timdir, DcMotor.Direction bleffdir, DcMotor.Direction joshdir) {
-        Bob.setDirection(bobdir);
-        Timothy.setDirection(timdir);
-        Bleff.setDirection(bleffdir);
-        Josh.setDirection(joshdir);
+        motorLeftFront.setDirection(bobdir);
+        motorRightFront.setDirection(timdir);
+        motorBackLeft.setDirection(bleffdir);
+        motorBackRight.setDirection(joshdir);
     }
 
     /**
@@ -212,14 +201,14 @@ public class CassHardware {
      */
     public void setHand(AidenDirections position) {
         if(position == AidenDirections.OPEN) {
-            LeftHand.setPosition(0.2);
-            RightHand.setPosition(0.25);
+            servoLeftHand.setPosition(0.2);
+            servoRightHand.setPosition(0.25);
         } else if(position == AidenDirections.ALLOPEN) {
-            LeftHand.setPosition(0.44);
-            RightHand.setPosition(0.07);
+            servoLeftHand.setPosition(0.44);
+            servoRightHand.setPosition(0.07);
         } else if(position == AidenDirections.CLOSED) {
-            LeftHand.setPosition(0.09);
-            RightHand.setPosition(0.4);
+            servoLeftHand.setPosition(0.09);
+            servoRightHand.setPosition(0.4);
         }
     }
 
@@ -228,10 +217,10 @@ public class CassHardware {
      */
     public void setDrivePower(double BobWheel, double TimothyWheel ,double BleffWheel ,double JoshWheel ) {
         // Output the values to the motor drives.
-        Bob.setPower(BobWheel/2);
-        Timothy.setPower(TimothyWheel/2);
-        Bleff.setPower(BleffWheel/2);
-        Josh.setPower(JoshWheel/2);
+        motorLeftFront.setPower(BobWheel/2);
+        motorRightFront.setPower(TimothyWheel/2);
+        motorBackLeft.setPower(BleffWheel/2);
+        motorBackRight.setPower(JoshWheel/2);
     }
 
     /**
@@ -250,17 +239,17 @@ public class CassHardware {
         } else if (direction == AidenDirections.RIGHT) {
             setAllDirections(AidenDirections.REVERSE, AidenDirections.REVERSE, AidenDirections.MFORWARD, AidenDirections.MFORWARD);
         }
-        while (Bob.getCurrentPosition() < targetposition && Timothy.getCurrentPosition() < targetposition && Bleff.getCurrentPosition() < targetposition && Josh.getCurrentPosition() < targetposition) {
-            Bob.setPower(power);
-            Timothy.setPower(power);
-            Bleff.setPower(power);
-            Josh.setPower(power);
+        while (motorLeftFront.getCurrentPosition() < targetposition && motorRightFront.getCurrentPosition() < targetposition && motorBackLeft.getCurrentPosition() < targetposition && motorBackRight.getCurrentPosition() < targetposition) {
+            motorLeftFront.setPower(power);
+            motorRightFront.setPower(power);
+            motorBackLeft.setPower(power);
+            motorBackRight.setPower(power);
         }
         setAllDirections(AidenDirections.REVERSE, AidenDirections.MFORWARD, AidenDirections.REVERSE, AidenDirections.MFORWARD);
-        Bob.setPower(0);
-        Timothy.setPower(0);
-        Bleff.setPower(0);
-        Josh.setPower(0);
+        motorLeftFront.setPower(0);
+        motorRightFront.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
         resetEncoders();
     }
 }
